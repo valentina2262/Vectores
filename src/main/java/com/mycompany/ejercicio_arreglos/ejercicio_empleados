@@ -1,0 +1,119 @@
+package com.mycompany.ejercicio_empleados;
+import java.util.Scanner;
+
+public class Ejercicio_empleados {
+static Scanner sc = new Scanner (System.in);
+static String[] nom = new String[10];
+static String[] ape = new String[10];
+static double[] sal = new double[10];
+static int[] dt = new int[10];
+static double[] tp = new double[10];
+static int opc;
+static int tam = 0; // cantidad de empleados registrados
+ 
+    public static void main(String[] args) {
+        menu();
+    }
+ 
+    public static void menu() {
+        System.out.println("============================");
+        System.out.println("       MENU PRINCIPAL       ");
+        System.out.println("============================");
+        System.out.println("1. Capturar");
+        System.out.println("2. Consultar");
+        System.out.println("3. Modificar");
+        System.out.println("4. Eliminar");
+        System.out.println("5. Salir");
+        System.out.println("Digite su opción: ");
+        opc = sc.nextInt();
+        switch(opc){
+            case 1: capturar();
+            break;
+            case 2: consultar();
+            break;
+            case 3: modificar();
+            break;
+            case 4: eliminar();
+            break;
+            case 5: 
+            break;
+            default: System.out.println("OPCION NO VALIDA...");
+            menu(); // Regresa al menu
+        }   
+    }
+    // Captura los datos de los empleados
+    public static void capturar() {
+        System.out.print("Digite cantidad de empleados a registrar (máx 10): ");
+        tam = sc.nextInt();  // define cuántos empleados se van a ingresar
+        for (int i = 0; i < tam; i++) {  // Recorre cada posición del vector
+            System.out.println("Empleado #" + i);
+            System.out.print("Nombre: ");
+            nom[i] = sc.next();
+            System.out.print("Apellido: ");
+            ape[i] = sc.next();
+            System.out.print("Salario: ");
+            sal[i] = sc.nextDouble();
+            System.out.print("Departamento (número): ");
+            dt[i] = sc.nextInt();
+            tp[i] = sal[i] * 0.9; // Calcula valor a pagar (ejemplo: salario con 10% descuento)
+        }
+        menu(); // Regresa al menu
+    }
+    // Consulta los datos de un empleado
+    public static void consultar() {
+        int des; //desicion
+        do {
+            System.out.print("Digite la posición a consultar: ");
+            int pos = sc.nextInt();
+            if (pos >= 0 && pos < tam && nom[pos] != null) {  // Si la posición es válida y no está vacía, muestra los datos
+                System.out.println("Nombre: " + nom[pos]);
+                System.out.println("Apellido: " + ape[pos]);
+                System.out.println("Salario: " + sal[pos]);
+                System.out.println("Departamento: " + dt[pos]);
+                System.out.println("Valor a pagar: " + tp[pos]);
+            } else {
+                System.out.println("Posición inválida o vacía.");
+            }
+            System.out.print("¿Otra consulta? (1 = sí, 0 = no): ");
+            des = sc.nextInt();
+        } while (des != 0);  // Repite mientras el usuario diga "sí"
+        menu(); // Regresa al menu
+    }
+    // Modifica los datos de un empleado
+    public static void modificar() {
+        System.out.print("Digite la posición a modificar: ");
+        int pos = sc.nextInt();
+        //Si la posición es mayor o igual a 0, menor que la cantidad de empleados registrados, y además esa posición no está vacía, entonces ejecuta el código.
+        if (pos >= 0 && pos < tam && nom[pos] != null) {    // Si la posición es válida, pide nuevos datos
+            System.out.print("Nuevo nombre: ");
+            nom[pos] = sc.next();
+            System.out.print("Nuevo apellido: ");
+            ape[pos] = sc.next();
+            System.out.print("Nuevo salario: ");
+            sal[pos] = sc.nextDouble();
+            System.out.print("Nuevo departamento: ");
+            dt[pos] = sc.nextInt();
+            tp[pos] = sal[pos] * 0.9; // recalculamos valor a pagar
+            System.out.println("Empleado modificado correctamente.");
+        } else {
+            System.out.println("Posición inválida o vacía.");
+        }
+        menu(); // Regresa al menu
+    }
+    // Elimina un empleado
+    public static void eliminar() {
+        System.out.print("Digite la posición a eliminar: ");
+        int pos = sc.nextInt(); //posición
+        if (pos >= 0 && pos < tam && nom[pos] != null) {  // Si la posición es válida, borra los datos
+            nom[pos] = null;  //El null se usa en vectores de texto (String) para indicar que están vacíos.
+            ape[pos] = null;
+            sal[pos] = 0;
+            dt[pos] = 0;
+            tp[pos] = 0;
+            System.out.println("Empleado eliminado correctamente.");
+        } else {
+            System.out.println("Posición inválida o vacía.");
+        }
+        menu(); // Regresa al menu
+    }
+}
